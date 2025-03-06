@@ -1,39 +1,36 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
+import React from 'react';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { ReminderProvider } from '@/contexts/ReminderContext';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+import { LanguageProvider } from '@/contexts/LanguajeContext';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <LanguageProvider>
+      <ThemeProvider>
+        <ReminderProvider>
+          <AuthProvider>
+            <Stack>
+              <Stack.Screen
+                name="Inicio"
+                options={{
+                  title: 'Inicio',
+                  headerShown: true,
+                }}
+              />
+
+              <Stack.Screen
+                name="Reminder"
+                options={{
+                  title: 'Crear Recordatorio',
+                  headerShown: true,
+                }}
+              />
+            </Stack>
+          </AuthProvider>
+        </ReminderProvider>
+      </ThemeProvider>
+    </LanguageProvider>
   );
 }

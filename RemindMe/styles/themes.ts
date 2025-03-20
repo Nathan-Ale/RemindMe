@@ -49,6 +49,10 @@ export const lightTheme = StyleSheet.create({
     borderColor: "black",
     marginBottom: 15,
   },
+  Label:{
+      color:"black",
+      backgroundColor: 'white',
+  }
 });
 
 export const darkTheme = StyleSheet.create({
@@ -100,4 +104,8 @@ export const darkTheme = StyleSheet.create({
       borderColor: "white",
       marginBottom: 15,
     },
+    Label:{
+      color:"black",
+      backgroundColor: 'white',
+    }
 });

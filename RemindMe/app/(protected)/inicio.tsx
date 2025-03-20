@@ -1,23 +1,24 @@
 import React, { useContext } from 'react';
 import { View, FlatList, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { ReminderContext } from '../../contexts/ReminderContext';
+import { useSelector } from 'react-redux';
 import ReminderCard from '../../components/ReminderCard';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { router } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from "@/contexts/ThemeContext";
 import { darkTheme, lightTheme } from "@/styles/themes";
 import { i18n } from '@/contexts/LanguajeContext';
-
+import { RootState } from '@/store/store';
 
 
 const Inicio = () => {
   const { logout } = useAuth();
-  const { reminders } = useContext(ReminderContext);
   const {theme} = useTheme();
   const themeStyles = theme === "dark" ? darkTheme : lightTheme;
 
-  
+  //Para obtener los recordatorios desde el estado de redux
+  const reminders = useSelector((state: RootState) => state.reminders.reminders);
+  console.log("Recordatorios:", JSON.stringify(reminders, null, 2));
+
   const handleLogout = () => {
     logout();
     router.replace('/login');

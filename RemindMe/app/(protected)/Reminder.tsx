@@ -1,20 +1,23 @@
-import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-import { ReminderContext } from '../../contexts/ReminderContext';
+import React, { useState } from 'react';
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { router } from 'expo-router';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useTheme } from "@/contexts/ThemeContext";
 import { darkTheme, lightTheme } from "@/styles/themes";
+import { addReminder } from '../../store/slices/reminderSlice';
+import { RootState } from '../../store/store';
+import { i18n } from '@/contexts/LanguajeContext';
 
 const Reminder = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [date, setDate] = useState(new Date());
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const {theme} = useTheme();
-    const themeStyles = theme === "dark" ? darkTheme : lightTheme;
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [date, setDate] = useState<Date>(new Date());
+  const [isDatePickerVisible, setDatePickerVisibility] = useState<boolean>(false);
+  const { theme } = useTheme();
+  const themeStyles = theme === "dark" ? darkTheme : lightTheme;
 
-  const { addReminder } = useContext(ReminderContext);
+  const dispatch = useDispatch();
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -42,7 +45,7 @@ const Reminder = () => {
       time: date.toISOString(),
     };
 
-    addReminder(newReminder);
+    dispatch(addReminder(newReminder));
     router.replace('/(protected)/inicio');
     Alert.alert('Éxito', 'Recordatorio guardado correctamente.');
     setTitle('');
@@ -50,51 +53,53 @@ const Reminder = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, themeStyles.containerInicio]}>
       <TextInput
-        style={styles.input}
-        placeholder="Título"
+        style={styles.tituloInput}
+        placeholder={i18n.t("Title")}
         value={title}
         onChangeText={setTitle}
       />
 
       <TextInput
-        style={styles.input}
-        placeholder="Descripción"
+        style={styles.descripcioninput}
+        placeholder={i18n.t("Description")}
         value={description}
         onChangeText={setDescription}
         multiline
+        numberOfLines={5}
       />
 
-      <Text style={styles.label}>Fecha y Hora:</Text>
-      <Button title="Seleccionar Fecha y Hora" onPress={showDatePicker} />
-      <Text style={styles.dateText}>{date.toLocaleString()}</Text>
+      <View style={styles.containerButtons}>
+        <TouchableOpacity style={themeStyles.button} onPress={showDatePicker}>
+          <Text style={themeStyles.buttonText}>{i18n.t("SelectDT")}</Text>
+        </TouchableOpacity>
 
-      {/* Selector de fecha y hora */}
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="datetime"
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-        date={date}
-      />
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="datetime"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+          date={date}
+        />
 
-      <TouchableOpacity style={themeStyles.button} onPress={handleSave}>
-        <Text style={themeStyles.buttonText}>Guardar Recordatorio</Text>
-      </TouchableOpacity>
-      {/* <Button title="Guardar Recordatorio" onPress={handleSave} /> */}
+        <TouchableOpacity style={themeStyles.button} onPress={handleSave}>
+          <Text style={themeStyles.buttonText}>{i18n.t("SaveReminder")}</Text>
+        </TouchableOpacity>
+        <Text style={styles.dateText}>{date.toLocaleString()}</Text>
+      </View>
     </View>
   );
 };
 
-// Estilos del componente
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
     backgroundColor: '#f5f5f5',
   },
-  input: {
+  tituloInput: {
     height: 40,
     borderColor: '#ccc',
     borderWidth: 1,
@@ -103,15 +108,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
   },
-  label: {
-    fontSize: 16,
-    marginBottom: 8,
-    fontWeight: 'bold',
+  descripcioninput: {
+    height: 110,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    marginBottom: 16,
+    paddingHorizontal: 8,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    textAlignVertical: 'top',
   },
   dateText: {
     fontSize: 14,
     marginBottom: 16,
     color: '#666',
+  },
+  containerButtons: {
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 });
 

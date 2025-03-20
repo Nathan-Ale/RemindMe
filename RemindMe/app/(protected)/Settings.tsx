@@ -4,7 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { darkTheme, lightTheme } from "@/styles/themes";
 import { Picker } from "@react-native-picker/picker";
-import { useLanguage } from "@/contexts/LanguajeContext";
+import { i18n, useLanguage } from "@/contexts/LanguajeContext";
 
 export default function SettingsScreen(){
     const {theme, toggleTheme} = useTheme();
@@ -14,7 +14,7 @@ export default function SettingsScreen(){
     return(
         <View style={styles.container}>
             <Text style={styles.text}> 
-                Modo Actual: Claro | Oscuro
+            {i18n.t("CurrentTheme")}
             </Text>
 
             <TouchableOpacity
@@ -22,20 +22,21 @@ export default function SettingsScreen(){
                 onPress={toggleTheme}>
                 <Text
                 style={styles.buttonText}
-                >Camiar Tema</Text>
+                >{i18n.t("ChangeTheme")}</Text>
             </TouchableOpacity>
 
             <Text style={styles.text}>
-                Idioma Actual: {language}
+                {i18n.t("CurrentLanguaje")}{language}
             </Text>
 
             <Picker
                 selectedValue={language}
                 style={{ height: 70, width: 200 }}
                 mode="dropdown"
+                dropdownIconColor={theme === "dark" ? "white" : "black"}
                 onValueChange={(itemValue) => changeLanguage(itemValue)}>
-                    <Picker.Item label="Ingles" value="en" />
-                    <Picker.Item label="Español" value="es" />
+                    <Picker.Item style={styles.Label} label={i18n.t("Languajeen")} value="en" />
+                    <Picker.Item style={styles.Label} label={i18n.t("Languajees")} value="es" />
             </Picker>
         </View>
     )

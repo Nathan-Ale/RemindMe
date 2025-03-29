@@ -52,7 +52,50 @@ export const lightTheme = StyleSheet.create({
   Label:{
       color:"black",
       backgroundColor: 'white',
-  }
+  },
+  userCard: {
+    backgroundColor: "#fff",
+    padding: 10,
+    marginVertical: 5,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+},
+
+userText: {
+    color: "#000",
+    fontSize: 16,
+},
+titleusers: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#000",
+    textAlign: "center",
+},
+tituloInput: {
+  height: 40,
+  borderColor: '#ccc',
+  borderWidth: 1,
+  marginBottom: 16,
+  paddingHorizontal: 8,
+  backgroundColor: '#fff',
+  borderRadius: 10,
+},
+descripcioninput: {
+  height: 110,
+  borderColor: '#ccc',
+  borderWidth: 1,
+  marginBottom: 16,
+  paddingHorizontal: 8,
+  backgroundColor: '#fff',
+  borderRadius: 10,
+  textAlignVertical: 'top',
+},
+
 });
 
 export const darkTheme = StyleSheet.create({
@@ -107,5 +150,51 @@ export const darkTheme = StyleSheet.create({
     Label:{
       color:"black",
       backgroundColor: 'white',
-    }
+    },
+    userCard: {
+      backgroundColor: "#333",
+      padding: 10,
+      marginVertical: 5,
+      borderRadius: 10,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
+      elevation: 3,
+  },
+  
+  userText: {
+      color:"#fff",
+      fontSize: 16,
+  },
+  titleusers: {
+      fontSize: 18,
+      fontWeight: "bold",
+      marginBottom: 10,
+      color: "#fff",
+      textAlign: "center",
+  },
+  
+  tituloInput: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    marginBottom: 16,
+    paddingHorizontal: 8,
+    backgroundColor: '#333',
+    borderRadius: 10,
+    color: "white",
+  },
+  descripcioninput: {
+    height: 110,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    marginBottom: 16,
+    paddingHorizontal: 8,
+    backgroundColor: '#333',
+    borderRadius: 10,
+    textAlignVertical: 'top',
+    color: "white",
+  },
+
 });

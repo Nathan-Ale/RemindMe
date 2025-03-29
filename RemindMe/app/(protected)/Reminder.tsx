@@ -55,15 +55,17 @@ const Reminder = () => {
   return (
     <View style={[styles.container, themeStyles.containerInicio]}>
       <TextInput
-        style={styles.tituloInput}
+        style={themeStyles.tituloInput}
         placeholder={i18n.t("Title")}
+        placeholderTextColor={"#aaa"}
         value={title}
         onChangeText={setTitle}
       />
 
       <TextInput
-        style={styles.descripcioninput}
+        style={themeStyles.descripcioninput}
         placeholder={i18n.t("Description")}
+        placeholderTextColor={"#aaa"}
         value={description}
         onChangeText={setDescription}
         multiline
@@ -98,25 +100,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: '#f5f5f5',
-  },
-  tituloInput: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    marginBottom: 16,
-    paddingHorizontal: 8,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-  },
-  descripcioninput: {
-    height: 110,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    marginBottom: 16,
-    paddingHorizontal: 8,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    textAlignVertical: 'top',
   },
   dateText: {
     fontSize: 14,
